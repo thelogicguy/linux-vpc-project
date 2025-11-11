@@ -334,6 +334,11 @@ class SubnetManager:
             run_command(f"ip netns exec {ns_name} ip link set {veth_ns} up")
             run_command(f"ip netns exec {ns_name} ip link set lo up")
 
+            # Configure DNS in the namespace
+            run_command(f"mkdir -p /etc/netns/{ns_name}")
+            run_command(f"echo 'nameserver 8.8.8.8' > /etc/netns/{ns_name}/resolv.conf")
+            run_command(f"echo 'nameserver 8.8.4.4' >> /etc/netns/{ns_name}/resolv.conf")
+
             # Set default route
             gateway_ip = vpc["gateway"]
             run_command(f"ip netns exec {ns_name} ip route add {gateway_ip}/32 dev {veth_ns}")
