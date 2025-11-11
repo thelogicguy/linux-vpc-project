@@ -187,8 +187,8 @@ class VPCManager:
         for existing_vpc_name, existing_vpc_data in state["vpcs"].items():
             existing_bridge = existing_vpc_data["bridge"]
             # Block both directions
-            run_command(f"iptables -I FORWARD -i {bridge_name} -o {existing_bridge} -j DROP")
-            run_command(f"iptables -I FORWARD -i {existing_bridge} -o {bridge_name} -j DROP")
+            run_command(f"iptables -A FORWARD -i {bridge_name} -o {existing_bridge} -j DROP")
+            run_command(f"iptables -A FORWARD -i {existing_bridge} -o {bridge_name} -j DROP")
 
         # Save VPC state
         vpc_data = {
@@ -512,8 +512,8 @@ class PeeringManager:
             run_command(f"ip netns exec {ns_name} ip route add {vpc1['cidr']} via {vpc2['gateway']}")
 
         # Add forwarding rules for peering traffic
-        run_command(f"iptables -A FORWARD -s {vpc1['cidr']} -d {vpc2['cidr']} -j ACCEPT")
-        run_command(f"iptables -A FORWARD -s {vpc2['cidr']} -d {vpc1['cidr']} -j ACCEPT")
+        run_command(f"iptables -I FORWARD -s {vpc1['cidr']} -d {vpc2['cidr']} -j ACCEPT")
+        run_command(f"iptables -I FORWARD -s {vpc2['cidr']} -d {vpc1['cidr']} -j ACCEPT")
 
         # Update state
         state = StateManager.load()
