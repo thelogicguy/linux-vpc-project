@@ -11,7 +11,7 @@ NC='\033[0m'
 
 clear
 echo -e "${GREEN}╔════════════════════════════════════════╗${NC}"
-echo -e "${GREEN}║  vpcctl demo - HNG Stage 4 Task        ║${NC}"
+echo -e "${GREEN}║  VPC Cloud on Linux - HNG Stage 4 Task ║${NC}"
 echo -e "${GREEN}║  By: Macdonald Daniel                  ║${NC}"
 echo -e "${GREEN}║  Time: $(date +%H:%M:%S)               ║${NC}"
 echo -e "${GREEN}╚════════════════════════════════════════╝${NC}"
