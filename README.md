@@ -155,10 +155,10 @@ sudo ./vpcctl deploy webserver --vpc vpc1 --subnet public --port 8080
 For a complete end-to-end demonstration (creating resources, running connectivity tests, applying firewall, and cleanup):
 
 ```bash
-./demo.sh
+./vpcctl_demo_showcase.sh
 ```
 
-*(Note: `demo.sh` runs commands using `sudo` internally.)*
+*(Note: `vpcctl_demo_showcase.sh` runs commands using `sudo` internally.)*
 
 ---
 
@@ -197,7 +197,7 @@ Host Machine
 You can validate the implementation by running the full demo script:
 
 ```bash
-./demo.sh
+./vpcctl_demo_showcase.sh
 ```
 
 ### Test Coverage
@@ -239,4 +239,4 @@ This script aggressively deletes all known namespaces, bridges, veth pairs, ipta
 
 ---
 
-**Built with ❤️ for the HNG Internship**
+**Light & ❤️**
