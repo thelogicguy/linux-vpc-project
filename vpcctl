@@ -182,6 +182,14 @@ class VPCManager:
         run_command(f"iptables -A FORWARD -i {bridge_name} -o {bridge_name} -j ACCEPT")
         run_command(f"iptables -A FORWARD -o {bridge_name} -m state --state RELATED,ESTABLISHED -j ACCEPT")
 
+        # Block traffic from this VPC to other VPC bridges (isolation)
+        state = StateManager.load()
+        for existing_vpc_name, existing_vpc_data in state["vpcs"].items():
+            existing_bridge = existing_vpc_data["bridge"]
+            # Block both directions
+            run_command(f"iptables -I FORWARD -i {bridge_name} -o {existing_bridge} -j DROP")
+            run_command(f"iptables -I FORWARD -i {existing_bridge} -o {bridge_name} -j DROP")
+
         # Save VPC state
         vpc_data = {
             "name": name,
